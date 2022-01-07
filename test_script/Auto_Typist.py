@@ -1,38 +1,30 @@
-import sys
-import os.path
 import time
 import random
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
 
-current_path = os.path.dirname(__file__)    # 获取当前目录
-driver_path = Service(os.path.join(current_path,'../browser_driven/chromedriver.exe'))   # 和当前的驱动目录拼接完整
-driver = webdriver.Chrome(service=driver_path)      # executable_path即将被弃用，改为service
+driver = webdriver.Chrome(executable_path=r"D:\automation\browser_driven\chromedriver.exe")
 # chrome驱动安装目录
-# sys.exit()      # 程序断点
 
 def openPage(url, myTime, errorRate):
     global driver
     # 打开网址
     driver.get(url)
-    sys.exit()      # 程序断点
     # 随机选择一片文章
-    randomButtom = driver.find_element(By.ID,'suiji_a')
+    randomButtom = driver.find_element_by_id('suiji_a')
     randomButtom.click()
     # 打字时间
-    wastTime = driver.find_element(By.ID,'time')
+    wastTime = driver.find_element_by_id('time')
     wastTime.clear()
     wastTime.send_keys(myTime)
     # 点击打字按钮
-    clickTest = driver.find_element(By.ID,'start_button')
+    clickTest = driver.find_element_by_name('start_button')
     clickTest.click()
     # 进入打字页面
     for x in range(0, 30):
         divId = 'i_' + str(x)
         # 选中对应序号的一组元素
-        dataString = driver.find_element(By.ID,divId)
+        dataString = driver.find_element_by_id(divId)
         # 提取文本
         inputText = dataString.find_element_by_tag_name('span')
         # 使用空格进行文本分词
